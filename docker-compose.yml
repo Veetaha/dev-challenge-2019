@@ -1,0 +1,30 @@
+version: '3'
+services: 
+    web:
+        build:   '.'
+        command: npm run dev
+        volumes:
+            - .:/usr/app/
+            - /usr/app/node_modules
+        ports:
+            - "3000:3000"
+        environment: 
+            DB_HOST: postgres
+            DB_USER: pguser
+            DB_PORT: 5432
+            DB_PASSWORD: pgpassword
+            DB_DB: pgdb
+        links: 
+            - postgres
+        depends_on: 
+            - postgres
+            
+    postgres:
+        image: postgres:11.2-alpine
+        restart: always
+        ports: 
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: pgpassword
+            POSTGRES_USER: pguser
+            POSTGRES_DB:   pgdb
