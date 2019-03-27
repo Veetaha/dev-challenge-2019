@@ -1,0 +1,6 @@
+{
+    "watch": ["src"],
+    "ext": "ts",
+    "ignore": ["src/**/*.spec.ts"],
+    "exec": "npm run build && node --inspect=0.0.0.0:9229 -r ./module-alias-register.js dist/src/main.js"
+}

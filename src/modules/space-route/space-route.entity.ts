@@ -1,25 +1,33 @@
-import { IsInt, Min, ValidateNested } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
-import { SpaceRouteQuery } from "@modules/space-route-query";
+import { IsInt, Min, validateSync } from "class-validator";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class SpaceRoute {
-    @PrimaryGeneratedColumn()
-    id!: number;
-
-    @ValidateNested()
-    @ManyToOne(_type => SpaceRouteQuery, query => query.routes)
-    query!: SpaceRouteQuery;
+    @IsInt() 
+    @Min(0) 
+    @PrimaryColumn() sector: number;
 
     @IsInt() 
     @Min(1) 
-    @Column() securityLevel!: number;
+    @PrimaryColumn() securityLevel: number;
     
     @IsInt()
     @Min(0)
-    @Column() beginIndex!: number; // inclusive
+    @Column() beginIndex: number; // inclusive
 
     @IsInt()
     @Min(0)
-    @Column() endIndex!:   number; // inclusive
+    @Column() endIndex:   number; // inclusive
+
+    isEmpty() {
+        return validateSync(this).length === 0;
+    }
+
+    constructor(data = { beginIndex: -1, endIndex: -1, sector: -1, securityLevel: -1 }) {
+        this.beginIndex    = data.beginIndex;
+        this.endIndex      = data.endIndex;
+        this.sector        = data.sector;
+        this.securityLevel = data.securityLevel;
+    }
+
 }

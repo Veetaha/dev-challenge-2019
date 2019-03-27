@@ -2,12 +2,13 @@ version: '3'
 services: 
     web:
         build:   '.'
-        command: npm run dev
+        command: npm run dev:debug
         volumes:
             - .:/usr/app/
             - /usr/app/node_modules
         ports:
             - "3000:3000"
+            - "9229:9229"
         environment: 
             DB_HOST: postgres
             DB_USER: pguser

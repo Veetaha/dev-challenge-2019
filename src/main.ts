@@ -3,11 +3,13 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from '@modules/app.module';
 import { LoggerService } from '@modules/utils';
+import { ValidationPipe } from '@nestjs/common';
 
 
 async function bootstrap() {
     const port = 3000;
-    const app = await NestFactory.create(AppModule);
+    const app = (await NestFactory.create(AppModule))
+        .useGlobalPipes(new ValidationPipe({ transform: true }));
 
     const docOpts = new DocumentBuilder()
         .setTitle('Star gateway')

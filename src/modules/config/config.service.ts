@@ -33,22 +33,4 @@ export class ConfigService implements TypeOrmOptionsFactory {
             synchronize: true,
         };
     }
-
-    // Auth configs
-
-
-    /*
-    Jwt = {
-        // expressed in seconds or a string describing a time span zeit/ms. Eg: 60, "2 days", "10h", "7d"
-        ExpirationTime:    '7d',
-        EncodingAlgorithm: 'RS256',
-        KeyPair: this.env.readJsonFileSyncOrThrow(
-            this.pathFromRoot('.rsa-keypair.json'),
-            { 
-                private: 'string', 
-                public:  'string' 
-            }
-        ),
-    };
-    */
 }
