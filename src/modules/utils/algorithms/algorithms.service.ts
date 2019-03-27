@@ -15,7 +15,7 @@ export class AlgorithmsService {
     /**
      * Alternative implementation of `getFirstSubArrFromSortedWithSum()`.
      */
-    getFirstSubArrFromSortedWithSumAlternatuveImpl(arr: number[], targetSum: number) {
+    getFirstSubArrFromSortedWithSumAlternativeImpl(arr: number[], targetSum: number) {
         let begin = Math.min(
             _.sortedIndexBy(arr, targetSum, val => Math.min(val, targetSum)), // O(log(n))
             arr.length - 1
@@ -37,8 +37,8 @@ export class AlgorithmsService {
     }
 
     /**
-     * Given number array `arr` and `targetSum` returns { begin, end } 
-     * inclusive bound for the first subarray which sum equals `targetSum`.
+     * Given number array `arr` and `targetSum` returns `{ begin, end }` 
+     * inclusive bounds for the first subarray with sum totaling `targetSum`.
      *
      * @param arr       Array of numbers to search for subarray in.
      * @param targetSum Target sum returned subarray must have.
@@ -49,8 +49,8 @@ export class AlgorithmsService {
         let sum = 0;
         while (end < arr.length && arr[end] <= targetSum) {    // O(n)
             sum += arr[end];
-            while (sum > targetSum && begin < end) {
-                sum -= arr[begin++];
+            while (sum > targetSum && begin < end) {   // both begin and end indices
+                sum -= arr[begin++];                   // may produce at most n iterations
             }
             if (sum === targetSum) {
                 return { begin, end };

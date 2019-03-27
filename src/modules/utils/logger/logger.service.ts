@@ -17,9 +17,9 @@ export class LoggerService {
      * @param payload       Object, which state needs to be logged.
      * @param description   Additional info message to be logged before `payload`.
      */
-    info(payload: unknown, description?: string) {
+    info(payload: unknown, description = '') {
         this.logCurrentTime();
-        console.log(Colors.blue(`Info: ${description || ''} `));
+        console.log(Colors.blue(`Info: ${description} `));
         console.dir(payload);
     }
 
@@ -31,10 +31,10 @@ export class LoggerService {
      * @param payload       `Error` or vanilla object, which state needs to be logged.
      * @param description   Additional info message to be logged before `payload`.
      */
-    error(payload: unknown, description?: string) {
+    error(payload: unknown, description = '') {
         debugger;
         this.logCurrentTime();
-        console.log(Colors.red(`Error: ${description || ''} `));
+        console.log(Colors.red(`Error: ${description} `));
         if (payload instanceof Error) {
             console.error(payload);
         } else {
@@ -46,12 +46,12 @@ export class LoggerService {
     /**
      * Same as info(), but has warning style formatting.
      * 
-     * @param payload       Vanilla object, which state needs to be logged.
-     * @param description   Additional info message to be logged before `payload`.
+     * @param payload     Vanilla object, which state needs to be logged.
+     * @param description Additional info message to be logged before `payload`.
      */
-    warning(payload: unknown, description?: string) {
+    warning(payload: unknown, description = '') {
         this.logCurrentTime();
-        console.log(Colors.yellow(`Warning: ${description || ''} `));
+        console.log(Colors.yellow(`Warning: ${description} `));
         console.dir(payload);
     }
 }

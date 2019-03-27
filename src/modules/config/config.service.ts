@@ -23,11 +23,12 @@ export class ConfigService implements TypeOrmOptionsFactory {
 
     createTypeOrmOptions(): TypeOrmModuleOptions {
         return {
-            host:      this.env.tryReadEnv('DB_HOST'),
-            port:      this.env.tryReadEnv('DB_PORT'),
-            username:  this.env.tryReadEnv('DB_USER'),
-            password:  this.env.tryReadEnv('DB_PASSWORD'),
-            database:  this.env.tryReadEnv('DB_DB'),
+            type:      'postgres',
+            host:      this.env.readEnvOrThrow('DB_HOST'),
+            port:      parseInt(this.env.readEnvOrThrow('DB_PORT'), 10),
+            username:  this.env.readEnvOrThrow('DB_USER'),
+            password:  this.env.readEnvOrThrow('DB_PASSWORD'),
+            database:  this.env.readEnvOrThrow('DB_DB'),
             entities: [this.pathFromRoot('dist/src/modules/**/*.entity.js')],
             synchronize: true,
         };

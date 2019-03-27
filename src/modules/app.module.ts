@@ -1,14 +1,23 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { UtilsModule   } from '@modules/utils';
-import { ConfigModule  } from '@modules/config';
-import { SpaceRoutesModule } from '@modules/space-routes';
+import { ConfigModule, ConfigService } from '@modules/config';
+import { SpaceRouteModule } from '@modules/space-route';
+import { ControlCenterModule } from '@modules/control-center';
+
+
 
 
 @Module({
     imports: [
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            useExisting: ConfigService
+        }),
         UtilsModule,
         ConfigModule,
-        SpaceRoutesModule
+        ControlCenterModule,
+        SpaceRouteModule
     ]
 })
 export class AppModule {}

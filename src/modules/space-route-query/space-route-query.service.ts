@@ -3,9 +3,7 @@ import { Injectable } from '@nestjs/common';
 
 
 @Injectable()
-export class SpaceRoutesService {
-
-    // localGates: 
+export class SpaceRouteQueryService {
 
     constructor(
     ) {

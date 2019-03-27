@@ -11,7 +11,7 @@ export class WorkflowService {
     ) {}
 
     /**
-     * Returns a Promise, that will be resolve in `msec` miliseconds.
+     * Returns a Promise, that will be resolved in `msec` miliseconds.
      */
     delay(msec: number) {
         return new Promise<void>(resolve => setInterval(resolve, msec));

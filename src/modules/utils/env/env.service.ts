@@ -23,7 +23,7 @@ export class EnvService {
      * 
      * @throws Error if `defaultVal == null` and `process.env[variableId] == null`.
      */
-    tryReadEnv(variableId: string, defaultVal?: I.Nullable<string>) {
+    readEnvOrThrow(variableId: string, defaultVal?: I.Nullable<string>) {
         if (process.env[variableId] != null) {
             return process.env[variableId]!;
         }
