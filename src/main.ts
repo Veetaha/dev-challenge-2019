@@ -25,7 +25,7 @@ async function bootstrap() {
         .addTag('routing')
         .build();
         
-    SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, docOpts));
+    SwaggerModule.setup('api/swagger', app, SwaggerModule.createDocument(app, docOpts));
 
     await app.listen(port);
     app.get(LoggerService).info(`🚀  Server is listening on port ${port}`);

@@ -7,7 +7,7 @@ export class SpaceRouteResponse {
     @ApiModelProperty({ description: 'Level of danger.' })
     securityLevel: number;
 
-    @ApiModelProperty({ type: [Number], description: 'Squense of gate numbers.' })
+    @ApiModelProperty({ type: [Number], description: 'Sequence of gate numbers.' })
     gates: number[];
 
     constructor(data: I.CoreObjData<SpaceRouteResponse>) {

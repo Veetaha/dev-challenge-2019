@@ -22,7 +22,8 @@ export class ConfigService implements TypeOrmOptionsFactory {
     }
 
     createTypeOrmOptions(): TypeOrmModuleOptions {
-        return {
+        return {   
+            logging: true,
             type:      'postgres',
             host:      this.env.readEnvOrThrow('DB_HOST'),
             port:      parseInt(this.env.readEnvOrThrow('DB_PORT'), 10),
@@ -30,7 +31,7 @@ export class ConfigService implements TypeOrmOptionsFactory {
             password:  this.env.readEnvOrThrow('DB_PASSWORD'),
             database:  this.env.readEnvOrThrow('DB_DB'),
             entities: [this.pathFromRoot('dist/src/modules/**/*.entity.js')],
-            synchronize: true,
+            synchronize: true
         };
     }
 }

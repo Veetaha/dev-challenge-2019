@@ -1,11 +1,13 @@
-import { Controller, Get, Param, Query, ParseIntPipe } from '@nestjs/common';
+import * as Vts from 'vee-type-safe';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 
 import { SpaceRouteResponse, SpaceRouteService } from '@modules/space-route';
 import { SectorQuery, SectorQueryService } from '@modules/sector-query';
+import { ParseNumberPipe } from '@modules/common/parse-number';
 
 
-@Controller('sectors')
+@Controller('api/v1/sectors')
 export class SectorsController {
 
     constructor(
@@ -20,8 +22,10 @@ export class SectorsController {
     })
     @Get(':sector') 
     async getRoutes(
-        @Query('spaceshipId', ParseIntPipe) spaceshipId: number,
-        @Param('sector',      ParseIntPipe)      sector: number
+        @Query('spaceshipId', new ParseNumberPipe(Vts.isPositiveInteger)) 
+        spaceshipId: number,
+        @Param('sector',  new ParseNumberPipe(Vts.isZeroOrPositiveInteger))
+        sector: number
     ) {
         const routes = await this.sectorQueries.querySpaceRoutes(new SectorQuery({
             sector, spaceshipId

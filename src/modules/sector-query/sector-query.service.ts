@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { SpaceRouteService } from '@modules/space-route';
+import { SpaceRouteService, SpaceRoute } from '@modules/space-route';
 import { PaginationParams  } from '@modules/common/pagination';
 import { PaginationService } from '@modules/common/pagination';
 import { SectorQueryRepo } from './sector-query.repository';
@@ -56,12 +56,18 @@ export class SectorQueryService {
      */
     async querySpaceRoutes(query: SectorQuery) {
         await this.repo.save(query);
-        const routes = await this.spaceRoutes.getFromDb(query.sector);
-        return routes != null 
-            ? routes 
-            : this.spaceRoutes.saveToDb(this.spaceRoutes.getFromFile(
-                query.sector
-            ));
+        const dbRoutes = await this.spaceRoutes.getFromDb(query.sector);
+        if (dbRoutes != null) {
+            return dbRoutes;
+        }
+        const computedRoutes = this.spaceRoutes.computeFromFile(
+            query.sector
+        );
+        if (computedRoutes.length !== 0) {
+            return this.spaceRoutes.saveToDb(computedRoutes);
+        }
+        await this.spaceRoutes.saveToDb([new SpaceRoute]); //empty route
+        return [];
     }
 
 

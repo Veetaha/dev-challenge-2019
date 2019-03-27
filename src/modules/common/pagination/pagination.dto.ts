@@ -1,4 +1,3 @@
-import * as I from '@app/interfaces';
 import { IsInt, Min, Max } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger';
 
@@ -16,7 +15,7 @@ export class PaginationParams {
     @Max(500)
     limit!: number;
 
-    constructor(data: I.CoreObjData<PaginationParams>) {
+    constructor(data = { offset: -1, limit: -1 }) {
         this.offset = data.offset;
         this.limit  = data.limit;
     }

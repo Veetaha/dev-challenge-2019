@@ -59,7 +59,7 @@ export class SpaceRouteService implements OnModuleInit {
      * 
      * @param sector Sector to calculate routes for.
      */
-    getFromFile(sector: number) {
+    computeFromFile(sector: number) {
         return this.gates.reduce((result, row, i) => {
             const rowRoute = this.algo.getFirstSubArrFromSortedWithSum(row, sector);
             if (rowRoute != null) {

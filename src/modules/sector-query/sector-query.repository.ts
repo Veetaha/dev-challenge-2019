@@ -9,27 +9,27 @@ import { SectorQuery } from './sector-query.entity';
 export class SectorQueryRepo extends Repository<SectorQuery> {
 
     async getQueriesFromSpaceship(spaceshipId: number, {offset, limit}: PaginationParams) {
-        return this.findAndCount({
-            where: { spaceshipId },
-            skip: offset,
-            take: limit
-        });
+        return this
+            .createQueryBuilder('sq')
+            .where('sq.spaceshipId = :spaceshipId', { spaceshipId })
+            .offset(offset)
+            .limit(limit)
+            .getManyAndCount();
     }
 
     async getLastQueries({offset, limit}: PaginationParams): Promise<
         [Pick<SectorQuery, 'sector' | 'spaceshipId'>[], number]
     > {
         return this
-            .createQueryBuilder('srq')
-            .select('srq.spaceshipId')
-            .addSelect('srq.sector')
-            .addSelect('MAX(sqr.id)')
-            .groupBy('spaceshipId')
-            .skip(offset)
-            .take(limit)
-            .select('srq.spaceshipId')
-            .addSelect('srq.sector')
-            .printSql()
+            .createQueryBuilder('sq')
+            .select('sq.spaceshipId', 'sid')
+            .addSelect('sq.sector', 'sector')
+            .addSelect('MAX(sq.id)', 'id')
+            .groupBy('sid')
+            .addGroupBy('sector')
+            .addGroupBy('id')
+            .offset(offset)
+            .limit(limit)
             .getManyAndCount();
     }
 }
